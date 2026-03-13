@@ -24,7 +24,7 @@ const translations = {
     'product.blue.name': 'Vaaleansininen',
     'product.blue.desc': 'Iso tunnus rinnassa, ympyrämerkki selässä.',
     'product.lilac.name': 'Lila',
-    'product.lilac.desc': 'Ympyämerkki rinnassa, ylisuurennettu tunnus selässä.',
+    'product.lilac.desc': 'Merkki rinnassa, suuri tunnus selässä.',
     'product.teal.name': 'Sinivihreä',
     'product.teal.desc': 'Pieni ympyrämerkki rinnassa, täysi sanamerkki selässä.',
     'product.navy.name': 'Tummansininen',
