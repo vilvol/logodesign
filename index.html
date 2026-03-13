@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTA — Helsingin Taitoluisteluakatemia</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- LOGIN OVERLAY -->
+  <div id="login-overlay" style="display:none;">
+    <div class="login-card">
+      <span class="login-brand">HTA</span>
+      <p class="login-label">Salasana</p>
+      <input id="login-pw" class="login-input" type="password" autocomplete="current-password" autofocus />
+      <button id="login-btn" class="login-btn">OK</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <span class="nav-brand">HTA</span>
+    <ul class="nav-links">
+      <li><a href="#logos" data-i18n="nav.logos">Logot</a></li>
+      <li><a href="showcase.html" data-i18n="nav.showcase">Paidat</a></li>
+    </ul>
+    <div class="lang-switcher">
+<button class="lang-btn" data-lang="fi">FI</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="sv">SV</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow" style="display:none;">Visuaalinen Identiteetti</p>
+    <img src="images/logos/logo-00.png" alt="Helsingin Taitoluisteluakatemia" class="hero-logo" />
+    <p class="hero-sub">logo design &amp; merchandise</p>
+  </section>
+
+  <!-- LOGOS -->
+  <section class="section" id="logos">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="logos.title">Logot</h2>
+      <p class="section-desc" data-i18n="logos.desc">Logot – tunnus, teksti ja yhdistelmät.</p>
+    </div>
+    <div class="logos-grid">
+      <div class="logo-card logo-card--light">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-line.png" alt="HTA line logo" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label1">Tunnus — Vaalea</p>
+      </div>
+      <div class="logo-card logo-card--dark">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-circle-dark.png" alt="HTA circle logo dark" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label2">Merkki — Tumma</p>
+      </div>
+      <div class="logo-card logo-card--light">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-wordmark.png" alt="HTA wordmark" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label3">Sanamerkki</p>
+      </div>
+      <div class="logo-card logo-card--light">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-circle-text.png" alt="HTA circle text logo" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label4">Ympyrälogo</p>
+      </div>
+      <div class="logo-card logo-card--light">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-text-thin.png" alt="HTA text thin" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label5">Teksti — Ohut</p>
+      </div>
+      <div class="logo-card logo-card--dark">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-text-bold.png" alt="HTA text bold" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label6">Teksti — Lihavoitu</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MERCHANDISE -->
+  <section class="section section--alt" id="merchandise">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="merch.title">Tuotteet</h2>
+      <p class="section-desc" data-i18n="merch.desc">Logoperhe sovellettuna huppukokoelmaan eri väreissä.</p>
+    </div>
+
+    <!-- Lavender -->
+    <div class="product">
+      <div class="product__info">
+        <span class="product__color-dot" style="background:#d4c4dc;"></span>
+        <div>
+          <h3 class="product__name" data-i18n="product.lavender.name">Laventeli</h3>
+          <p class="product__desc" data-i18n="product.lavender.desc">Pieni tunnus rinnassa, ympyrämerkki selässä.</p>
+        </div>
+      </div>
+      <div class="product__images">
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-lavender-front.png" alt="Lavender hoodie front" />
+          <span class="product__view-label" data-i18n="label.front">Etupuoli</span>
+        </div>
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-lavender-back.png" alt="Lavender hoodie back" />
+          <span class="product__view-label" data-i18n="label.back">Selkäpuoli</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Light Blue -->
+    <div class="product product--reverse">
+      <div class="product__info">
+        <span class="product__color-dot" style="background:#b8d4e8;"></span>
+        <div>
+          <h3 class="product__name" data-i18n="product.blue.name">Vaaleansininen</h3>
+          <p class="product__desc" data-i18n="product.blue.desc">Iso tunnus rinnassa, ympyrämerkki selässä.</p>
+        </div>
+      </div>
+      <div class="product__images">
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-blue-front.png" alt="Light blue hoodie front" />
+          <span class="product__view-label" data-i18n="label.front">Etupuoli</span>
+        </div>
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-blue-back.png" alt="Light blue hoodie back" />
+          <span class="product__view-label" data-i18n="label.back">Selkäpuoli</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lilac -->
+    <div class="product">
+      <div class="product__info">
+        <span class="product__color-dot" style="background:#c0b4d8;"></span>
+        <div>
+          <h3 class="product__name" data-i18n="product.lilac.name">Lila</h3>
+          <p class="product__desc" data-i18n="product.lilac.desc">Ympyämerkki rinnassa, ylisuurennettu tunnus selässä.</p>
+        </div>
+      </div>
+      <div class="product__images">
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-lilac-front.png" alt="Lilac hoodie front" />
+          <span class="product__view-label" data-i18n="label.front">Etupuoli</span>
+        </div>
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-lilac-back.png" alt="Lilac hoodie back" />
+          <span class="product__view-label" data-i18n="label.back">Selkäpuoli</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teal -->
+    <div class="product product--reverse">
+      <div class="product__info">
+        <span class="product__color-dot" style="background:#5b9e9e;"></span>
+        <div>
+          <h3 class="product__name" data-i18n="product.teal.name">Sinivihreä</h3>
+          <p class="product__desc" data-i18n="product.teal.desc">Pieni ympyrämerkki rinnassa, täysi sanamerkki selässä.</p>
+        </div>
+      </div>
+      <div class="product__images">
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-teal-front.png" alt="Teal hoodie front" />
+          <span class="product__view-label" data-i18n="label.front">Etupuoli</span>
+        </div>
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-teal-back.png" alt="Teal hoodie back" />
+          <span class="product__view-label" data-i18n="label.back">Selkäpuoli</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navy HTA -->
+    <div class="product">
+      <div class="product__info">
+        <span class="product__color-dot" style="background:#2a3f7a;"></span>
+        <div>
+          <h3 class="product__name" data-i18n="product.navy.name">Tummansininen</h3>
+          <p class="product__desc" data-i18n="product.navy.desc">Rohkea HTA-teksti rinnassa, ympyräsanamerkki selässä.</p>
+        </div>
+      </div>
+      <div class="product__images">
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-navy-front.png" alt="Navy hoodie front" />
+          <span class="product__view-label" data-i18n="label.front">Etupuoli</span>
+        </div>
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-navy-back.png" alt="Navy hoodie back" />
+          <span class="product__view-label" data-i18n="label.back">Selkäpuoli</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark Navy HTA -->
+    <div class="product product--reverse">
+      <div class="product__info">
+        <span class="product__color-dot" style="background:#1a2540;"></span>
+        <div>
+          <h3 class="product__name" data-i18n="product.darknavy.name">Tummansininen</h3>
+          <p class="product__desc" data-i18n="product.darknavy.desc">HTA-teksti rinnassa, logosymboli selässä.</p>
+        </div>
+      </div>
+      <div class="product__images">
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-darknavy-front.png" alt="Dark navy hoodie front" />
+          <span class="product__view-label" data-i18n="label.front">Etupuoli</span>
+        </div>
+        <div class="product__image-wrap">
+          <img src="images/merchandise/hoodie-darknavy-back.png" alt="Dark navy hoodie back" />
+          <span class="product__view-label" data-i18n="label.back">Selkäpuoli</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact" style="display:none;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="contact.title">Ota Yhteyttä</h2>
+      <p class="section-desc" data-i18n="contact.desc">Kiinnostaako kokoelma tai räätälöity suunnittelu?</p>
+    </div>
+    <div class="contact-block">
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>Helsingin Taitoluisteluakatemia</span>
+    <span class="footer-sep">—</span>
+    <span data-i18n="footer.tagline">Logot &amp; Tuotteet</span>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script>
+    (function () {
+      if (sessionStorage.getItem('hta-auth') === '1') return;
+      const overlay = document.getElementById('login-overlay');
+      overlay.style.display = 'flex';
+      document.body.classList.add('login-active');
+
+      function attempt() {
+        const val = document.getElementById('login-pw').value;
+        if (val === 'htakatemia') {
+          sessionStorage.setItem('hta-auth', '1');
+          overlay.classList.add('login-overlay--out');
+          document.body.classList.remove('login-active');
+          setTimeout(() => overlay.remove(), 400);
+        } else {
+          const field = document.getElementById('login-pw');
+          field.classList.add('login-input--error');
+          field.value = '';
+          field.focus();
+          setTimeout(() => field.classList.remove('login-input--error'), 600);
+        }
+      }
+
+      document.getElementById('login-btn').addEventListener('click', attempt);
+      document.getElementById('login-pw').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') attempt();
+      });
+    })();
+  </script>
+</body>
+</html>

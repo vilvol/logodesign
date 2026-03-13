@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTA — Tuotekokoelma</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- SHOWCASE ---- */
+
+    .showcase-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 72px; /* nav height */
+    }
+
+    .showcase-stage {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      max-width: var(--max-width);
+      width: 100%;
+      margin: 0 auto;
+      padding: 64px 32px;
+      gap: 64px;
+      align-items: center;
+    }
+
+    /* Left panel */
+    .showcase-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .showcase-dot {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1);
+      transition: background 0.35s ease;
+    }
+
+    .showcase-name {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 300;
+      color: var(--color-navy);
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+
+    .showcase-desc {
+      font-size: 14px;
+      color: var(--color-muted);
+      line-height: 1.7;
+      font-weight: 300;
+      transition: opacity 0.2s;
+    }
+
+    .showcase-nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .showcase-nav-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+      padding: 0;
+      background-clip: padding-box;
+      position: relative;
+    }
+
+    .showcase-nav-dot::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1.5px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .showcase-nav-dot.active::after {
+      border-color: var(--color-navy);
+    }
+
+    .showcase-nav-dot:hover {
+      transform: scale(1.15);
+    }
+
+    /* Right panel */
+    .showcase-images-col {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .showcase-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .showcase-image-wrap {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .showcase-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 16px;
+      transition: opacity 0.3s ease, transform 0.4s ease;
+    }
+
+    .showcase-image-wrap img.fading {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+
+    .showcase-view-label {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+
+    /* Show all button */
+    .show-all-wrap {
+      text-align: center;
+    }
+
+    .show-all-btn {
+      background: none;
+      border: 1px solid var(--color-navy);
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      padding: 12px 32px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .show-all-btn:hover {
+      color: var(--color-navy);
+    }
+
+    /* All products panel (reuses product styles from style.css) */
+    .all-products {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .all-products[hidden] {
+      display: none;
+    }
+
+    /* ---- LIGHTBOX ---- */
+
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(10, 10, 10, 0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    #lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #lightbox img {
+      max-width: min(80vw, 560px);
+      max-height: 85vh;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: color 0.15s;
+    }
+
+    .lightbox-close:hover {
+      color: #fff;
+    }
+
+    /* Make gallery images show pointer cursor */
+    .all-products .product__image-wrap {
+      cursor: zoom-in;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .showcase-stage {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 40px 20px;
+      }
+
+      .showcase-info {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+
+      .showcase-dot {
+        width: 36px;
+        height: 36px;
+      }
+
+      .showcase-name,
+      .showcase-desc,
+      .showcase-nav {
+        width: 100%;
+      }
+
+      .showcase-images {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN OVERLAY -->
+  <div id="login-overlay" style="display:none;">
+    <div class="login-card">
+      <span class="login-brand">HTA</span>
+      <p class="login-label">Salasana</p>
+      <input id="login-pw" class="login-input" type="password" autocomplete="current-password" autofocus />
+      <button id="login-btn" class="login-btn">OK</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <span class="nav-brand">HTA</span>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.logos">Logot</a></li>
+      <li><a href="showcase.html" data-i18n="nav.showcase">Paidat</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="fi">FI</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="sv">SV</button>
+    </div>
+  </nav>
+
+  <!-- EDITORIAL -->
+  <section class="editorial">
+    <img src="images/merchandise/model-03.png" alt="HTA hoodie model" />
+  </section>
+
+  <!-- SHOWCASE -->
+  <div class="showcase-page">
+
+    <div class="showcase-stage">
+      <!-- Left: info -->
+      <div class="showcase-info">
+        <span class="showcase-dot" id="sc-dot"></span>
+        <h2 class="showcase-name" id="sc-name"></h2>
+        <p class="showcase-desc" id="sc-desc"></p>
+        <div class="showcase-nav" id="sc-nav"></div>
+      </div>
+
+      <!-- Right: images + show all -->
+      <div class="showcase-images-col">
+        <div class="showcase-images">
+          <div class="showcase-image-wrap">
+            <img id="sc-front" src="" alt="" />
+            <span class="showcase-view-label" data-i18n="label.front">Edestä</span>
+          </div>
+          <div class="showcase-image-wrap">
+            <img id="sc-back" src="" alt="" />
+            <span class="showcase-view-label" data-i18n="label.back">Takaa</span>
+          </div>
+        </div>
+        <div class="show-all-wrap">
+          <button class="show-all-btn" id="show-all-btn" data-i18n="showcase.showAll">Näytä kaikki vaihtoehdot</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- All products (hidden initially) -->
+    <div class="all-products section section--alt" id="all-products" hidden>
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="merch.title">Tuotteet</h2>
+        <p class="section-desc" data-i18n="merch.desc">Logoperhe sovellettuna huppukokoelmaan eri väreissä.</p>
+      </div>
+
+      <!-- Lavender -->
+      <div class="product">
+        <div class="product__info">
+          <span class="product__color-dot" style="background:#d4c4dc;"></span>
+          <div>
+            <h3 class="product__name" data-i18n="product.lavender.name">Laventeli</h3>
+            <p class="product__desc" data-i18n="product.lavender.desc">Pieni tunnus rinnassa, ympyräsanamerkki selässä.</p>
+          </div>
+        </div>
+        <div class="product__images">
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-lavender-front.png" alt="Lavender hoodie front" />
+            <span class="product__view-label" data-i18n="label.front">Edestä</span>
+          </div>
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-lavender-back.png" alt="Lavender hoodie back" />
+            <span class="product__view-label" data-i18n="label.back">Takaa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Light Blue -->
+      <div class="product product--reverse">
+        <div class="product__info">
+          <span class="product__color-dot" style="background:#b8d4e8;"></span>
+          <div>
+            <h3 class="product__name" data-i18n="product.blue.name">Vaaleansininen</h3>
+            <p class="product__desc" data-i18n="product.blue.desc">Iso tunnus rinnassa, ympyrämerkki selässä.</p>
+          </div>
+        </div>
+        <div class="product__images">
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-blue-front.png" alt="Light blue hoodie front" />
+            <span class="product__view-label" data-i18n="label.front">Edestä</span>
+          </div>
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-blue-back.png" alt="Light blue hoodie back" />
+            <span class="product__view-label" data-i18n="label.back">Takaa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lilac -->
+      <div class="product">
+        <div class="product__info">
+          <span class="product__color-dot" style="background:#c0b4d8;"></span>
+          <div>
+            <h3 class="product__name" data-i18n="product.lilac.name">Lila</h3>
+            <p class="product__desc" data-i18n="product.lilac.desc">Ympyämerkki rinnassa, ylisuurennettu tunnus selässä.</p>
+          </div>
+        </div>
+        <div class="product__images">
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-lilac-front.png" alt="Lilac hoodie front" />
+            <span class="product__view-label" data-i18n="label.front">Edestä</span>
+          </div>
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-lilac-back.png" alt="Lilac hoodie back" />
+            <span class="product__view-label" data-i18n="label.back">Takaa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teal -->
+      <div class="product product--reverse">
+        <div class="product__info">
+          <span class="product__color-dot" style="background:#5b9e9e;"></span>
+          <div>
+            <h3 class="product__name" data-i18n="product.teal.name">Sinivihreä</h3>
+            <p class="product__desc" data-i18n="product.teal.desc">Pieni ympyrämerkki rinnassa, täysi sanamerkki selässä.</p>
+          </div>
+        </div>
+        <div class="product__images">
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-teal-front.png" alt="Teal hoodie front" />
+            <span class="product__view-label" data-i18n="label.front">Edestä</span>
+          </div>
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-teal-back.png" alt="Teal hoodie back" />
+            <span class="product__view-label" data-i18n="label.back">Takaa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navy -->
+      <div class="product">
+        <div class="product__info">
+          <span class="product__color-dot" style="background:#2a3f7a;"></span>
+          <div>
+            <h3 class="product__name" data-i18n="product.navy.name">Tummansininen</h3>
+            <p class="product__desc" data-i18n="product.navy.desc">Rohkea HTA-teksti rinnassa, ympyräsanamerkki selässä.</p>
+          </div>
+        </div>
+        <div class="product__images">
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-navy-front.png" alt="Navy hoodie front" />
+            <span class="product__view-label" data-i18n="label.front">Edestä</span>
+          </div>
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-navy-back.png" alt="Navy hoodie back" />
+            <span class="product__view-label" data-i18n="label.back">Takaa</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dark Navy -->
+      <div class="product product--reverse">
+        <div class="product__info">
+          <span class="product__color-dot" style="background:#1a2540;"></span>
+          <div>
+            <h3 class="product__name" data-i18n="product.darknavy.name">Erittäin tummansininen</h3>
+            <p class="product__desc" data-i18n="product.darknavy.desc">HTA-teksti rinnassa, logosymboli selässä.</p>
+          </div>
+        </div>
+        <div class="product__images">
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-darknavy-front.png" alt="Dark navy hoodie front" />
+            <span class="product__view-label" data-i18n="label.front">Edestä</span>
+          </div>
+          <div class="product__image-wrap">
+            <img src="images/merchandise/hoodie-darknavy-back.png" alt="Dark navy hoodie back" />
+            <span class="product__view-label" data-i18n="label.back">Takaa</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /all-products -->
+
+  </div><!-- /showcase-page -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>Helsingin Taitoluisteluakatemia</span>
+    <span class="footer-sep">—</span>
+    <span data-i18n="footer.tagline">Visuaalinen identiteetti &amp; tuotteet</span>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Sulje">&#x2715;</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script>
+    // Add showcase strings to i18n
+    Object.assign(translations.fi, {
+      'showcase.showAll': 'Näytä kaikki vaihtoehdot',
+      'showcase.showLess': 'Piilota',
+    });
+    Object.assign(translations.en, {
+      'showcase.showAll': 'Show all variations',
+      'showcase.showLess': 'Hide',
+    });
+    Object.assign(translations.sv, {
+      'showcase.showAll': 'Visa alla variationer',
+      'showcase.showLess': 'Dölj',
+    });
+
+    // Hoodie data
+    const hoodies = [
+      {
+        key: 'lavender',
+        color: '#d4c4dc',
+        front: 'images/merchandise/hoodie-lavender-front.png',
+        back:  'images/merchandise/hoodie-lavender-back.png',
+      },
+      {
+        key: 'blue',
+        color: '#b8d4e8',
+        front: 'images/merchandise/hoodie-blue-front.png',
+        back:  'images/merchandise/hoodie-blue-back.png',
+      },
+      {
+        key: 'lilac',
+        color: '#c0b4d8',
+        front: 'images/merchandise/hoodie-lilac-front.png',
+        back:  'images/merchandise/hoodie-lilac-back.png',
+      },
+      {
+        key: 'teal',
+        color: '#5b9e9e',
+        front: 'images/merchandise/hoodie-teal-front.png',
+        back:  'images/merchandise/hoodie-teal-back.png',
+      },
+      {
+        key: 'navy',
+        color: '#2a3f7a',
+        front: 'images/merchandise/hoodie-navy-front.png',
+        back:  'images/merchandise/hoodie-navy-back.png',
+      },
+      {
+        key: 'darknavy',
+        color: '#1a2540',
+        front: 'images/merchandise/hoodie-darknavy-front.png',
+        back:  'images/merchandise/hoodie-darknavy-back.png',
+      },
+    ];
+
+    let current = 0;
+    const scDot   = document.getElementById('sc-dot');
+    const scName  = document.getElementById('sc-name');
+    const scDesc  = document.getElementById('sc-desc');
+    const scFront = document.getElementById('sc-front');
+    const scBack  = document.getElementById('sc-back');
+    const scNav   = document.getElementById('sc-nav');
+
+    function getLang() {
+      return localStorage.getItem('hta-lang') || 'fi';
+    }
+
+    function renderText(idx) {
+      const lang = getLang();
+      const h = hoodies[idx];
+      scName.textContent = translations[lang]['product.' + h.key + '.name'] || '';
+      scDesc.textContent = translations[lang]['product.' + h.key + '.desc'] || '';
+      scDot.style.background = h.color;
+    }
+
+    function switchTo(idx, skipFade) {
+      const h = hoodies[idx];
+      current = idx;
+
+      // Update nav dots
+      scNav.querySelectorAll('.showcase-nav-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+
+      // Text update
+      renderText(idx);
+
+      if (skipFade) {
+        scFront.src = h.front;
+        scBack.src  = h.back;
+        return;
+      }
+
+      // Fade images
+      scFront.classList.add('fading');
+      scBack.classList.add('fading');
+      setTimeout(() => {
+        scFront.src = h.front;
+        scBack.src  = h.back;
+        scFront.classList.remove('fading');
+        scBack.classList.remove('fading');
+      }, 280);
+    }
+
+    // Build nav dots
+    hoodies.forEach((h, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'showcase-nav-dot';
+      btn.style.background = h.color;
+      btn.setAttribute('aria-label', h.key);
+      btn.addEventListener('click', () => switchTo(i));
+      scNav.appendChild(btn);
+    });
+
+    // Initial render
+    switchTo(0, true);
+
+    // Re-render text on language change (hook into setLanguage)
+    const _origSetLanguage = setLanguage;
+    window.setLanguage = function(lang) {
+      _origSetLanguage(lang);
+      renderText(current);
+    };
+
+    // Show all toggle
+    const showAllBtn = document.getElementById('show-all-btn');
+    const allProducts = document.getElementById('all-products');
+    showAllBtn.addEventListener('click', () => {
+      const isHidden = allProducts.hidden;
+      allProducts.hidden = !isHidden;
+      const lang = getLang();
+      showAllBtn.textContent = isHidden
+        ? translations[lang]['showcase.showLess']
+        : translations[lang]['showcase.showAll'];
+      if (isHidden) {
+        allProducts.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  </script>
+
+  <!-- Lightbox -->
+  <script>
+    (function () {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+
+      function openLightbox(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      // Delegate clicks on gallery images
+      document.getElementById('all-products').addEventListener('click', function (e) {
+        const wrap = e.target.closest('.product__image-wrap');
+        if (!wrap) return;
+        const img = wrap.querySelector('img');
+        if (img) openLightbox(img.src, img.alt);
+      });
+
+      document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+  </script>
+
+  <!-- Login -->
+  <script>
+    (function () {
+      if (sessionStorage.getItem('hta-auth') === '1') return;
+      const overlay = document.getElementById('login-overlay');
+      overlay.style.display = 'flex';
+      document.body.classList.add('login-active');
+
+      function attempt() {
+        const val = document.getElementById('login-pw').value;
+        if (val === 'htakatemia') {
+          sessionStorage.setItem('hta-auth', '1');
+          overlay.classList.add('login-overlay--out');
+          document.body.classList.remove('login-active');
+          setTimeout(() => overlay.remove(), 400);
+        } else {
+          const field = document.getElementById('login-pw');
+          field.classList.add('login-input--error');
+          field.value = '';
+          field.focus();
+          setTimeout(() => field.classList.remove('login-input--error'), 600);
+        }
+      }
+
+      document.getElementById('login-btn').addEventListener('click', attempt);
+      document.getElementById('login-pw').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') attempt();
+      });
+    })();
+  </script>
+</body>
+</html>
