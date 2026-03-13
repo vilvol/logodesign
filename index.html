@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTA — Helsingin Taitoluisteluakatemia</title>
+  <title>Logo & Merchandise</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -181,8 +181,8 @@
       <div class="product__info">
         <span class="product__color-dot" style="background:#2a3f7a;"></span>
         <div>
-          <h3 class="product__name" data-i18n="product.navy.name">Tummansininen</h3>
-          <p class="product__desc" data-i18n="product.navy.desc">Rohkea HTA-teksti rinnassa, ympyräsanamerkki selässä.</p>
+          <h3 class="product__name" data-i18n="product.navy.name">Sininen</h3>
+          <p class="product__desc" data-i18n="product.navy.desc">HTA-teksti rinnassa, ympyräsanamerkki selässä.</p>
         </div>
       </div>
       <div class="product__images">
@@ -230,6 +230,12 @@
     </div>
   </section>
 
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Sulje">&#x2715;</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
   <!-- FOOTER -->
   <footer class="footer">
     <span>Helsingin Taitoluisteluakatemia</span>
@@ -264,6 +270,41 @@
       document.getElementById('login-btn').addEventListener('click', attempt);
       document.getElementById('login-pw').addEventListener('keydown', function (e) {
         if (e.key === 'Enter') attempt();
+      });
+    })();
+  </script>
+
+  <!-- Lightbox -->
+  <script>
+    (function () {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+
+      function openLightbox(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('merchandise').addEventListener('click', function (e) {
+        const wrap = e.target.closest('.product__image-wrap');
+        if (!wrap) return;
+        const img = wrap.querySelector('img');
+        if (img) openLightbox(img.src, img.alt);
+      });
+
+      document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
       });
     })();
   </script>
