@@ -466,6 +466,54 @@ body.login-active {
   opacity: 0.4;
 }
 
+/* ---- LIGHTBOX ---- */
+
+#lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(10, 10, 10, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+#lightbox.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+#lightbox img {
+  max-width: min(80vw, 560px);
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.15s;
+}
+
+.lightbox-close:hover {
+  color: #fff;
+}
+
+.product__image-wrap {
+  cursor: zoom-in;
+}
+
 /* ---- RESPONSIVE ---- */
 
 @media (max-width: 768px) {
