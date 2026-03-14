@@ -28,7 +28,7 @@ const translations = {
     'product.teal.name': 'Sinivihreä',
     'product.teal.desc': 'Pieni ympyrämerkki rinnassa, täysi sanamerkki selässä.',
     'product.navy.name': 'Tummansininen',
-    'product.navy.desc': 'Rohkea HTA-teksti rinnassa, ympyräsanamerkki selässä.',
+    'product.navy.desc': 'HTA-teksti rinnassa, ympyrämerkki selässä.',
     'product.darknavy.name': 'Tummansininen',
     'product.darknavy.desc': 'HTA-teksti rinnassa, logosymboli selässä.',
     'label.front': 'Etupuoli',
@@ -64,11 +64,11 @@ const translations = {
     'product.lilac.name': 'Lilac',
     'product.lilac.desc': 'Circle badge on chest, oversized mark on back.',
     'product.teal.name': 'Teal',
-    'product.teal.desc': 'Small circle badge on chest, full wordmark on back.',
+    'product.teal.desc': 'Small circle badge on chest, HTA type on back.',
     'product.navy.name': 'Navy',
     'product.navy.desc': 'HTA type on chest, circle wordmark on back.',
     'product.darknavy.name': 'Dark Navy',
-    'product.darknavy.desc': 'Inverted HTA block type on chest, clean mark on back.',
+    'product.darknavy.desc': 'HTA block type on chest, clean mark on back.',
     'label.front': 'Front',
     'label.back': 'Back',
     'contact.title': 'Get in Touch',
@@ -104,9 +104,9 @@ const translations = {
     'product.teal.name': 'Blågrönt',
     'product.teal.desc': 'Litet cirkelmärke på bröstet, fullt ordmärke på ryggen.',
     'product.navy.name': 'Marinblå',
-    'product.navy.desc': 'Fet HTA-text på bröstet, cirkelordmärke på ryggen.',
+    'product.navy.desc': 'HTA-text på bröstet, cirkelordmärke på ryggen.',
     'product.darknavy.name': 'Mörkmarinblå',
-    'product.darknavy.desc': 'Inverterad HTA-blocktext på bröstet, rent märke på ryggen.',
+    'product.darknavy.desc': 'HTA-blocktext på bröstet, rent märke på ryggen.',
     'label.front': 'Framsida',
     'label.back': 'Baksida',
     'contact.title': 'Kontakta Oss',
@@ -133,4 +133,4 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
 });
 
-setLanguage(localStorage.getItem('hta-lang') || 'fi');
+setLanguage(localStorage.getItem('hta-lang') || 'en');
