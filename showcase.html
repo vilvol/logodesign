@@ -146,7 +146,8 @@
 
     /* Show all button */
     .show-all-wrap {
-      text-align: center;
+      text-align: left;
+      padding-top: 24px;
     }
 
     .show-all-btn {
@@ -213,7 +214,6 @@
   <!-- LOGIN OVERLAY -->
   <div id="login-overlay" style="display:none;">
     <div class="login-card">
-      <span class="login-brand">HTA</span>
       <p class="login-label">Salasana</p>
       <input id="login-pw" class="login-input" type="password" autocomplete="current-password" autofocus />
       <button id="login-btn" class="login-btn">OK</button>
@@ -222,7 +222,7 @@
 
   <!-- NAV -->
   <nav class="nav">
-    <span class="nav-brand">HTA</span>
+    <a href="index.html" class="nav-brand">HTA</a>
     <ul class="nav-links">
       <li><a href="index.html" data-i18n="nav.logos">Logot</a></li>
       <li><a href="showcase.html" data-i18n="nav.showcase">Paidat</a></li>
@@ -234,13 +234,14 @@
     </div>
   </nav>
 
-  <!-- EDITORIAL -->
-  <section class="editorial">
-    <img src="images/merchandise/model-03.png" alt="HTA hoodie model" />
-  </section>
-
+ 
   <!-- SHOWCASE -->
   <div class="showcase-page">
+
+    <div class="section-header" style="padding-top: 20px;">
+      <h2 class="section-title" data-i18n="merch.title">Tuotteet</h2>
+      <p class="section-desc" data-i18n="merch.desc">Logoperhe sovellettuna huppukokoelmaan eri väreissä.</p>
+    </div>
 
     <div class="showcase-stage">
       <!-- Left: info -->
@@ -249,9 +250,12 @@
         <h2 class="showcase-name" id="sc-name"></h2>
         <p class="showcase-desc" id="sc-desc"></p>
         <div class="showcase-nav" id="sc-nav"></div>
+        <div class="show-all-wrap">
+          <button class="show-all-btn" id="show-all-btn" data-i18n="showcase.showAll">Näytä kaikki vaihtoehdot</button>
+        </div>
       </div>
 
-      <!-- Right: images + show all -->
+      <!-- Right: images -->
       <div class="showcase-images-col">
         <div class="showcase-images">
           <div class="showcase-image-wrap">
@@ -263,146 +267,19 @@
             <span class="showcase-view-label" data-i18n="label.back">Takaa</span>
           </div>
         </div>
-        <div class="show-all-wrap">
-          <button class="show-all-btn" id="show-all-btn" data-i18n="showcase.showAll">Näytä kaikki vaihtoehdot</button>
-        </div>
       </div>
     </div>
 
     <!-- All products (hidden initially) -->
     <div class="all-products section section--alt" id="all-products" hidden>
-      <div class="section-header">
-        <h2 class="section-title" data-i18n="merch.title">Tuotteet</h2>
-        <p class="section-desc" data-i18n="merch.desc">Logoperhe sovellettuna huppukokoelmaan eri väreissä.</p>
-      </div>
-
-      <!-- Lavender -->
-      <div class="product">
-        <div class="product__info">
-          <span class="product__color-dot" style="background:#d4c4dc;"></span>
-          <div>
-            <h3 class="product__name" data-i18n="product.lavender.name">Laventeli</h3>
-            <p class="product__desc" data-i18n="product.lavender.desc">Pieni tunnus rinnassa, ympyräsanamerkki selässä.</p>
-          </div>
-        </div>
-        <div class="product__images">
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-lavender-front.png" alt="Lavender hoodie front" />
-            <span class="product__view-label" data-i18n="label.front">Edestä</span>
-          </div>
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-lavender-back.png" alt="Lavender hoodie back" />
-            <span class="product__view-label" data-i18n="label.back">Takaa</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Light Blue -->
-      <div class="product product--reverse">
-        <div class="product__info">
-          <span class="product__color-dot" style="background:#b8d4e8;"></span>
-          <div>
-            <h3 class="product__name" data-i18n="product.blue.name">Vaaleansininen</h3>
-            <p class="product__desc" data-i18n="product.blue.desc">Iso tunnus rinnassa, ympyrämerkki selässä.</p>
-          </div>
-        </div>
-        <div class="product__images">
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-blue-front.png" alt="Light blue hoodie front" />
-            <span class="product__view-label" data-i18n="label.front">Edestä</span>
-          </div>
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-blue-back.png" alt="Light blue hoodie back" />
-            <span class="product__view-label" data-i18n="label.back">Takaa</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lilac -->
-      <div class="product">
-        <div class="product__info">
-          <span class="product__color-dot" style="background:#c0b4d8;"></span>
-          <div>
-            <h3 class="product__name" data-i18n="product.lilac.name">Lila</h3>
-            <p class="product__desc" data-i18n="product.lilac.desc">Merkki rinnassa, suuri tunnus selässä.</p>
-          </div>
-        </div>
-        <div class="product__images">
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-lilac-front.png" alt="Lilac hoodie front" />
-            <span class="product__view-label" data-i18n="label.front">Edestä</span>
-          </div>
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-lilac-back.png" alt="Lilac hoodie back" />
-            <span class="product__view-label" data-i18n="label.back">Takaa</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Teal -->
-      <div class="product product--reverse">
-        <div class="product__info">
-          <span class="product__color-dot" style="background:#86B0BB;"></span>
-          <div>
-            <h3 class="product__name" data-i18n="product.teal.name">Sinivihreä</h3>
-            <p class="product__desc" data-i18n="product.teal.desc">Pieni ympyrämerkki rinnassa, täysi sanamerkki selässä.</p>
-          </div>
-        </div>
-        <div class="product__images">
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-teal-front.png" alt="Teal hoodie front" />
-            <span class="product__view-label" data-i18n="label.front">Edestä</span>
-          </div>
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-teal-back.png" alt="Teal hoodie back" />
-            <span class="product__view-label" data-i18n="label.back">Takaa</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Navy -->
-      <div class="product">
-        <div class="product__info">
-          <span class="product__color-dot" style="background:#2a3f7a;"></span>
-          <div>
-            <h3 class="product__name" data-i18n="product.navy.name">Sininen</h3>
-            <p class="product__desc" data-i18n="product.navy.desc">HTA-teksti rinnassa, ympyräsanamerkki selässä.</p>
-          </div>
-        </div>
-        <div class="product__images">
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-navy-front.png" alt="Navy hoodie front" />
-            <span class="product__view-label" data-i18n="label.front">Edestä</span>
-          </div>
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-navy-back.png" alt="Navy hoodie back" />
-            <span class="product__view-label" data-i18n="label.back">Takaa</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dark Navy -->
-      <div class="product product--reverse">
-        <div class="product__info">
-          <span class="product__color-dot" style="background:#1a2540;"></span>
-          <div>
-            <h3 class="product__name" data-i18n="product.darknavy.name">Erittäin tummansininen</h3>
-            <p class="product__desc" data-i18n="product.darknavy.desc">HTA-teksti rinnassa, logosymboli selässä.</p>
-          </div>
-        </div>
-        <div class="product__images">
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-darknavy-front.png" alt="Dark navy hoodie front" />
-            <span class="product__view-label" data-i18n="label.front">Edestä</span>
-          </div>
-          <div class="product__image-wrap">
-            <img src="images/merchandise/hoodie-darknavy-back.png" alt="Dark navy hoodie back" />
-            <span class="product__view-label" data-i18n="label.back">Takaa</span>
-          </div>
-        </div>
-      </div>
-
+      <div id="variants-grid"></div>
     </div><!-- /all-products -->
+
+     <!-- EDITORIAL -->
+  <section class="editorial">
+    <img src="images/merchandise/model-03.png" alt="HTA hoodie model" />
+  </section>
+
 
   </div><!-- /showcase-page -->
 
@@ -423,55 +300,103 @@
   <script>
     // Add showcase strings to i18n
     Object.assign(translations.fi, {
-      'showcase.showAll': 'Näytä kaikki vaihtoehdot',
-      'showcase.showLess': 'Piilota',
+      'showcase.showAll': 'Näytä logovariaatiot',
+      'showcase.showLess': 'Piilota variaatiot',
+      'showcase.stage.desc': 'Vaihda hupparin väri alla olevista pisteistä.',
     });
     Object.assign(translations.en, {
-      'showcase.showAll': 'Show all variations',
-      'showcase.showLess': 'Hide',
+      'showcase.showAll': 'Show logo variations',
+      'showcase.showLess': 'Hide variations',
+      'showcase.stage.desc': 'Change hoodie color from the dots below.',
     });
     Object.assign(translations.sv, {
-      'showcase.showAll': 'Visa alla variationer',
-      'showcase.showLess': 'Dölj',
+      'showcase.showAll': 'Visa logotypvarianter',
+      'showcase.showLess': 'Dölj varianter',
+      'showcase.stage.desc': 'Byt hoodiefärg med punkterna nedan.',
     });
+
+    // Re-apply language now that showcase strings are registered
+    setLanguage(localStorage.getItem('hta-lang') || 'en');
 
     // Hoodie data
     const hoodies = [
       {
         key: 'lavender',
-        color: '#d4c4dc',
-        front: 'images/merchandise/hoodie-lavender-front.png',
-        back:  'images/merchandise/hoodie-lavender-back.png',
+        color: '#DAC6D7',
+        front: 'images/merchandise/showcase-hoodie-lavender-front.png',
+        back:  'images/merchandise/showcase-hoodie-lavender-back.png',
+        variants: [
+          { labelKey: 'logos.label2', front: 'images/merchandise/logo-lavender-v1-front.png', back: 'images/merchandise/logo-lavender-v1-back.png' },
+          { labelKey: 'logos.label3', front: 'images/merchandise/logo-lavender-v2-front.png', back: 'images/merchandise/logo-lavender-v2-back.png' },
+          { labelKey: 'logos.label4', front: 'images/merchandise/logo-lavender-v3-front.png', back: 'images/merchandise/logo-lavender-v3-back.png' },
+          { labelKey: 'logos.label5', front: 'images/merchandise/logo-lavender-v4-front.png', back: 'images/merchandise/logo-lavender-v4-back.png' },
+          { labelKey: 'logos.label6', front: 'images/merchandise/logo-lavender-v5-front.png', back: 'images/merchandise/logo-lavender-v5-back.png' },
+        ],
       },
       {
         key: 'blue',
-        color: '#b8d4e8',
-        front: 'images/merchandise/hoodie-blue-front.png',
-        back:  'images/merchandise/hoodie-blue-back.png',
+        color: '#C4DAEE',
+        front: 'images/merchandise/showcase-hoodie-blue-front.png',
+        back:  'images/merchandise/showcase-hoodie-blue-back.png',
+        variants: [
+          { labelKey: 'logos.label2', front: 'images/merchandise/logo-blue-v1-front.png', back: 'images/merchandise/logo-blue-v1-back.png' },
+          { labelKey: 'logos.label3', front: 'images/merchandise/logo-blue-v2-front.png', back: 'images/merchandise/logo-blue-v2-back.png' },
+          { labelKey: 'logos.label4', front: 'images/merchandise/logo-blue-v3-front.png', back: 'images/merchandise/logo-blue-v3-back.png' },
+          { labelKey: 'logos.label5', front: 'images/merchandise/logo-blue-v4-front.png', back: 'images/merchandise/logo-blue-v4-back.png' },
+          { labelKey: 'logos.label6', front: 'images/merchandise/logo-blue-v5-front.png', back: 'images/merchandise/logo-blue-v5-back.png' },
+        ],
       },
       {
         key: 'lilac',
-        color: '#c0b4d8',
-        front: 'images/merchandise/hoodie-lilac-front.png',
-        back:  'images/merchandise/hoodie-lilac-back.png',
+        color: '#AFB6D9',
+        front: 'images/merchandise/showcase-hoodie-lilac-front.png',
+        back:  'images/merchandise/showcase-hoodie-lilac-back.png',
+        variants: [
+          { labelKey: 'logos.label2', front: 'images/merchandise/logo-lilac-v1-front.png', back: 'images/merchandise/logo-lilac-v1-back.png' },
+          { labelKey: 'logos.label3', front: 'images/merchandise/logo-lilac-v2-front.png', back: 'images/merchandise/logo-lilac-v2-back.png' },
+          { labelKey: 'logos.label4', front: 'images/merchandise/logo-lilac-v3-front.png', back: 'images/merchandise/logo-lilac-v3-back.png' },
+          { labelKey: 'logos.label5', front: 'images/merchandise/logo-lilac-v4-front.png', back: 'images/merchandise/logo-lilac-v4-back.png' },
+          { labelKey: 'logos.label6', front: 'images/merchandise/logo-lilac-v5-front.png', back: 'images/merchandise/logo-lilac-v5-back.png' },
+        ],
       },
       {
         key: 'teal',
-        color: '#86B0BB',
-        front: 'images/merchandise/hoodie-teal-front.png',
-        back:  'images/merchandise/hoodie-teal-back.png',
+        color: '#80AEBC',
+        front: 'images/merchandise/showcase-hoodie-teal-front.png',
+        back:  'images/merchandise/showcase-hoodie-teal-back.png',
+        variants: [
+          { labelKey: 'logos.label2', front: 'images/merchandise/logo-teal-v1-front.png', back: 'images/merchandise/logo-teal-v1-back.png' },
+          { labelKey: 'logos.label3', front: 'images/merchandise/logo-teal-v2-front.png', back: 'images/merchandise/logo-teal-v2-back.png' },
+          { labelKey: 'logos.label4', front: 'images/merchandise/logo-teal-v3-front.png', back: 'images/merchandise/logo-teal-v3-back.png' },
+          { labelKey: 'logos.label5', front: 'images/merchandise/logo-teal-v4-front.png', back: 'images/merchandise/logo-teal-v4-back.png' },
+          { labelKey: 'logos.label6', front: 'images/merchandise/logo-teal-v5-front.png', back: 'images/merchandise/logo-teal-v5-back.png' },
+        ],
       },
       {
         key: 'navy',
-        color: '#2a3f7a',
-        front: 'images/merchandise/hoodie-navy-front.png',
-        back:  'images/merchandise/hoodie-navy-back.png',
+        color: '#4D5F86',
+        front: 'images/merchandise/showcase-hoodie-navy-front.png',
+        back:  'images/merchandise/showcase-hoodie-navy-back.png',
+        variants: [
+          { labelKey: 'logos.label2', front: 'images/merchandise/logo-navy-v1-front.png', back: 'images/merchandise/logo-navy-v1-back.png' },
+          { labelKey: 'logos.label3', front: 'images/merchandise/logo-navy-v2-front.png', back: 'images/merchandise/logo-navy-v2-back.png' },
+          { labelKey: 'logos.label4', front: 'images/merchandise/logo-navy-v3-front.png', back: 'images/merchandise/logo-navy-v3-back.png' },
+          { labelKey: 'logos.label5', front: 'images/merchandise/logo-navy-v4-front.png', back: 'images/merchandise/logo-navy-v4-back.png' },
+          { labelKey: 'logos.label6', front: 'images/merchandise/logo-navy-v5-front.png', back: 'images/merchandise/logo-navy-v5-back.png' },
+        ],
       },
       {
         key: 'darknavy',
-        color: '#1a2540',
-        front: 'images/merchandise/hoodie-darknavy-front.png',
-        back:  'images/merchandise/hoodie-darknavy-back.png',
+        color: '#2C3546',
+        front: 'images/merchandise/showcase-hoodie-darknavy-front.png',
+        back:  'images/merchandise/showcase-hoodie-darknavy-back.png',
+        variants: [
+          { labelKey: 'logos.label2', front: 'images/merchandise/logo-darknavy-v1-front.png', back: 'images/merchandise/logo-darknavy-v1-back.png' },
+          { labelKey: 'logos.label3', front: 'images/merchandise/logo-darknavy-v2-front.png', back: 'images/merchandise/logo-darknavy-v2-back.png' },
+          { labelKey: 'logos.label4', front: 'images/merchandise/logo-darknavy-v3-front.png', back: 'images/merchandise/logo-darknavy-v3-back.png' },
+          { labelKey: 'logos.label5', front: 'images/merchandise/logo-darknavy-v4-front.png', back: 'images/merchandise/logo-darknavy-v4-back.png' },
+          { labelKey: 'logos.label6', front: 'images/merchandise/logo-darknavy-v5-front.png', back: 'images/merchandise/logo-darknavy-v5-back.png' },
+        ],
       },
     ];
 
@@ -491,7 +416,7 @@
       const lang = getLang();
       const h = hoodies[idx];
       scName.textContent = translations[lang]['product.' + h.key + '.name'] || '';
-      scDesc.textContent = translations[lang]['product.' + h.key + '.desc'] || '';
+      scDesc.textContent = translations[lang]['showcase.stage.desc'] || '';
       scDot.style.background = h.color;
     }
 
@@ -512,6 +437,10 @@
         scBack.src  = h.back;
         return;
       }
+
+      // Re-render variants if panel is open
+      const ap = document.getElementById('all-products');
+      if (ap && !ap.hidden) renderVariants(idx);
 
       // Fade images
       scFront.classList.add('fading');
@@ -537,11 +466,48 @@
     // Initial render
     switchTo(0, true);
 
+    // Render logo variants for the selected colour into #variants-grid
+    function renderVariants(idx) {
+      const h = hoodies[idx];
+      const lang = getLang();
+      const frontLabel = translations[lang]['label.front'] || 'Front';
+      const backLabel  = translations[lang]['label.back']  || 'Back';
+      const grid = document.getElementById('variants-grid');
+      grid.innerHTML = '';
+
+      const variants = (h.variants && h.variants.length)
+        ? h.variants
+        : [{ labelKey: 'product.' + h.key + '.name', front: h.front, back: h.back }];
+
+      variants.forEach((v, i) => {
+        const label = translations[lang][v.labelKey] || v.labelKey;
+        const el = document.createElement('div');
+        el.className = 'product' + (i % 2 === 1 ? ' product--reverse' : '');
+        el.innerHTML = `
+          <div class="product__info">
+            <span class="product__color-dot" style="background:${h.color};"></span>
+            <div><h3 class="product__name">${label}</h3></div>
+          </div>
+          <div class="product__images">
+            <div class="product__image-wrap">
+              <img src="${v.front}" alt="${label} front" />
+              <span class="product__view-label">${frontLabel}</span>
+            </div>
+            <div class="product__image-wrap">
+              <img src="${v.back}" alt="${label} back" />
+              <span class="product__view-label">${backLabel}</span>
+            </div>
+          </div>`;
+        grid.appendChild(el);
+      });
+    }
+
     // Re-render text on language change (hook into setLanguage)
     const _origSetLanguage = setLanguage;
     window.setLanguage = function(lang) {
       _origSetLanguage(lang);
       renderText(current);
+      if (!allProducts.hidden) renderVariants(current);
     };
 
     // Show all toggle
@@ -555,6 +521,7 @@
         ? translations[lang]['showcase.showLess']
         : translations[lang]['showcase.showAll'];
       if (isHidden) {
+        renderVariants(current);
         allProducts.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });

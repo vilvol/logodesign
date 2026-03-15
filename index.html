@@ -11,7 +11,6 @@
   <!-- LOGIN OVERLAY -->
   <div id="login-overlay" style="display:none;">
     <div class="login-card">
-      <span class="login-brand">HTA</span>
       <p class="login-label">Salasana</p>
       <input id="login-pw" class="login-input" type="password" autocomplete="current-password" autofocus />
       <button id="login-btn" class="login-btn">OK</button>
@@ -20,7 +19,7 @@
 
   <!-- NAV -->
   <nav class="nav">
-    <span class="nav-brand">HTA</span>
+    <a href="index.html" class="nav-brand">HTA</a>
     <ul class="nav-links">
       <li><a href="#logos" data-i18n="nav.logos">Logot</a></li>
       <li><a href="showcase.html" data-i18n="nav.showcase">Paidat</a></li>
@@ -46,39 +45,39 @@
       <p class="section-desc" data-i18n="logos.desc">Logot – tunnus, teksti ja yhdistelmät.</p>
     </div>
     <div class="logos-grid">
-      <div class="logo-card logo-card--light">
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v0-large.png">
         <div class="logo-card__image">
-          <img src="images/logos/logo-line.png" alt="HTA line logo" />
+          <img src="images/logos/logo-v0.png" alt="HTA line logo" />
         </div>
         <p class="logo-card__label" data-i18n="logos.label1">Tunnus — Vaalea</p>
       </div>
-      <div class="logo-card logo-card--dark">
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v1-large.png">
         <div class="logo-card__image">
-          <img src="images/logos/logo-circle-dark.png" alt="HTA circle logo dark" />
+          <img src="images/logos/logo-v1.png" alt="HTA circle logo dark" />
         </div>
         <p class="logo-card__label" data-i18n="logos.label2">Merkki — Tumma</p>
       </div>
-      <div class="logo-card logo-card--light">
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v2-large.png">
         <div class="logo-card__image">
-          <img src="images/logos/logo-wordmark.png" alt="HTA wordmark" />
+          <img src="images/logos/logo-v2.png" alt="HTA wordmark" />
         </div>
         <p class="logo-card__label" data-i18n="logos.label3">Sanamerkki</p>
       </div>
-      <div class="logo-card logo-card--light">
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v3-large.png">
         <div class="logo-card__image">
-          <img src="images/logos/logo-circle-text.png" alt="HTA circle text logo" />
+          <img src="images/logos/logo-v3.png" alt="HTA circle text logo" />
         </div>
         <p class="logo-card__label" data-i18n="logos.label4">Ympyrälogo</p>
       </div>
-      <div class="logo-card logo-card--light">
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v5-large.png">
         <div class="logo-card__image">
-          <img src="images/logos/logo-text-thin.png" alt="HTA text thin" />
+          <img src="images/logos/logo-v5.png" alt="HTA text thin" />
         </div>
         <p class="logo-card__label" data-i18n="logos.label5">Teksti — Ohut</p>
       </div>
-      <div class="logo-card logo-card--dark">
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v6-large.png">
         <div class="logo-card__image">
-          <img src="images/logos/logo-text-bold.png" alt="HTA text bold" />
+          <img src="images/logos/logo-v6.png" alt="HTA text bold" />
         </div>
         <p class="logo-card__label" data-i18n="logos.label6">Teksti — Lihavoitu</p>
       </div>
@@ -86,7 +85,7 @@
   </section>
 
   <!-- MERCHANDISE -->
-  <section class="section section--alt" id="merchandise">
+  <section class="section section--alt" id="merchandise" hidden>
     <div class="section-header">
       <h2 class="section-title" data-i18n="merch.title">Tuotteet</h2>
       <p class="section-desc" data-i18n="merch.desc">Logoperhe sovellettuna huppukokoelmaan eri väreissä.</p>
@@ -95,7 +94,7 @@
     <!-- Lavender -->
     <div class="product">
       <div class="product__info">
-        <span class="product__color-dot" style="background:#d4c4dc;"></span>
+        <span class="product__color-dot" style="background:#DAC6D7;"></span>
         <div>
           <h3 class="product__name" data-i18n="product.lavender.name">Laventeli</h3>
           <p class="product__desc" data-i18n="product.lavender.desc">Pieni tunnus rinnassa, ympyrämerkki selässä.</p>
@@ -116,7 +115,7 @@
     <!-- Light Blue -->
     <div class="product product--reverse">
       <div class="product__info">
-        <span class="product__color-dot" style="background:#b8d4e8;"></span>
+        <span class="product__color-dot" style="background:#C4DAEE;"></span>
         <div>
           <h3 class="product__name" data-i18n="product.blue.name">Vaaleansininen</h3>
           <p class="product__desc" data-i18n="product.blue.desc">Iso tunnus rinnassa, ympyrämerkki selässä.</p>
@@ -137,7 +136,7 @@
     <!-- Lilac -->
     <div class="product">
       <div class="product__info">
-        <span class="product__color-dot" style="background:#c0b4d8;"></span>
+        <span class="product__color-dot" style="background:#AFB6D9;"></span>
         <div>
           <h3 class="product__name" data-i18n="product.lilac.name">Lila</h3>
           <p class="product__desc" data-i18n="product.lilac.desc">Merkki rinnassa, suuri tunnus selässä.</p>
@@ -158,7 +157,7 @@
     <!-- Teal -->
     <div class="product product--reverse">
       <div class="product__info">
-        <span class="product__color-dot" style="background:#86B0BB;"></span>
+        <span class="product__color-dot" style="background:#80AEBC;"></span>
         <div>
           <h3 class="product__name" data-i18n="product.teal.name">Sinivihreä</h3>
           <p class="product__desc" data-i18n="product.teal.desc">Pieni ympyrämerkki rinnassa, täysi sanamerkki selässä.</p>
@@ -179,7 +178,7 @@
     <!-- Navy HTA -->
     <div class="product">
       <div class="product__info">
-        <span class="product__color-dot" style="background:#2a3f7a;"></span>
+        <span class="product__color-dot" style="background:#4D5F86;"></span>
         <div>
           <h3 class="product__name" data-i18n="product.navy.name">Sininen</h3>
           <p class="product__desc" data-i18n="product.navy.desc">HTA-teksti rinnassa, ympyräsanamerkki selässä.</p>
@@ -200,7 +199,7 @@
     <!-- Dark Navy HTA -->
     <div class="product product--reverse">
       <div class="product__info">
-        <span class="product__color-dot" style="background:#1a2540;"></span>
+        <span class="product__color-dot" style="background:#2C3546;"></span>
         <div>
           <h3 class="product__name" data-i18n="product.darknavy.name">Tummansininen</h3>
           <p class="product__desc" data-i18n="product.darknavy.desc">HTA-teksti rinnassa, logosymboli selässä.</p>
@@ -280,9 +279,10 @@
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
 
-      function openLightbox(src, alt) {
+      function openLightbox(src, alt, light) {
         lightboxImg.src = src;
         lightboxImg.alt = alt;
+        lightbox.classList.toggle('lightbox--light', !!light);
         lightbox.classList.add('open');
         document.body.style.overflow = 'hidden';
       }
@@ -296,7 +296,14 @@
         const wrap = e.target.closest('.product__image-wrap');
         if (!wrap) return;
         const img = wrap.querySelector('img');
-        if (img) openLightbox(img.src, img.alt);
+        if (img) openLightbox(img.src, img.alt, false);
+      });
+
+      document.querySelector('.logos-grid').addEventListener('click', function (e) {
+        const card = e.target.closest('.logo-card');
+        if (!card) return;
+        const img = card.querySelector('img');
+        if (img) openLightbox(card.dataset.lightboxSrc || img.src, img.alt, true);
       });
 
       document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
