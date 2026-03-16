@@ -21,7 +21,7 @@
   <nav class="nav">
     <a href="index.html" class="nav-brand">HTA</a>
     <ul class="nav-links">
-      <li><a href="#logos" data-i18n="nav.logos">Logot</a></li>
+      <li><a href="logos.html" data-i18n="nav.logos">Logot</a></li>
       <li><a href="showcase.html" data-i18n="nav.showcase">Paidat</a></li>
     </ul>
     <div class="lang-switcher">
@@ -63,24 +63,46 @@
         </div>
         <p class="logo-card__label" data-i18n="logos.label3">Sanamerkki</p>
       </div>
-      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v3-large.png">
-        <div class="logo-card__image">
-          <img src="images/logos/logo-v3.png" alt="HTA circle text logo" />
-        </div>
-        <p class="logo-card__label" data-i18n="logos.label4">Ympyrälogo</p>
+    </div>
+    <div class="hoodies-more">
+      <a href="logos.html" class="hoodies-more-btn" data-i18n="logos.showMore">Katso kaikki</a>
+    </div>
+  </section>
+
+  <!-- HOODIES -->
+  <section class="section section--alt" id="hoodies">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="hoodies.title">Hupparit</h2>
+      <p class="section-desc" data-i18n="hoodies.desc">Logoperhe sovellettuna huppukokoelmaan eri väreissä.</p>
+    </div>
+    <div class="hoodies-grid">
+      <div class="hoodie-preview">
+        <img src="images/merchandise/showcase-hoodie-lavender-front.png" alt="Lavender hoodie" />
+        <p class="hoodie-preview__label" data-i18n="product.lavender.name">Laventeli</p>
       </div>
-      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v5-large.png">
-        <div class="logo-card__image">
-          <img src="images/logos/logo-v5.png" alt="HTA text thin" />
-        </div>
-        <p class="logo-card__label" data-i18n="logos.label5">Teksti — Ohut</p>
+      <div class="hoodie-preview">
+        <img src="images/merchandise/showcase-hoodie-blue-front.png" alt="Light blue hoodie" />
+        <p class="hoodie-preview__label" data-i18n="product.blue.name">Vaaleansininen</p>
       </div>
-      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v6-large.png">
-        <div class="logo-card__image">
-          <img src="images/logos/logo-v6.png" alt="HTA text bold" />
-        </div>
-        <p class="logo-card__label" data-i18n="logos.label6">Teksti — Lihavoitu</p>
+      <div class="hoodie-preview">
+        <img src="images/merchandise/showcase-hoodie-lilac-front.png" alt="Lilac hoodie" />
+        <p class="hoodie-preview__label" data-i18n="product.lilac.name">Lila</p>
       </div>
+      <div class="hoodie-preview">
+        <img src="images/merchandise/showcase-hoodie-teal-front.png" alt="Teal hoodie" />
+        <p class="hoodie-preview__label" data-i18n="product.teal.name">Sinivihreä</p>
+      </div>
+      <div class="hoodie-preview">
+        <img src="images/merchandise/showcase-hoodie-navy-front.png" alt="Navy hoodie" />
+        <p class="hoodie-preview__label" data-i18n="product.navy.name">Sininen</p>
+      </div>
+      <div class="hoodie-preview">
+        <img src="images/merchandise/showcase-hoodie-darknavy-front.png" alt="Dark navy hoodie" />
+        <p class="hoodie-preview__label" data-i18n="product.darknavy.name">Tummansininen</p>
+      </div>
+    </div>
+    <div class="hoodies-more">
+      <a href="showcase.html" class="hoodies-more-btn" data-i18n="hoodies.showMore">Katso kaikki</a>
     </div>
   </section>
 
@@ -237,8 +259,6 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <span>Helsingin Taitoluisteluakatemia</span>
-    <span class="footer-sep">—</span>
     <span data-i18n="footer.tagline">Logot &amp; Tuotteet</span>
   </footer>
 
@@ -304,6 +324,13 @@
         if (!card) return;
         const img = card.querySelector('img');
         if (img) openLightbox(card.dataset.lightboxSrc || img.src, img.alt, true);
+      });
+
+      document.querySelector('.hoodies-grid').addEventListener('click', function (e) {
+        const preview = e.target.closest('.hoodie-preview');
+        if (!preview) return;
+        const img = preview.querySelector('img');
+        if (img) openLightbox(img.src, img.alt, false);
       });
 
       document.getElementById('lightbox-close').addEventListener('click', closeLightbox);

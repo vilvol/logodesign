@@ -158,6 +158,7 @@
       font-weight: 400;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+      text-decoration: none;
       color: var(--color-muted);
       padding: 12px 32px;
       border-radius: 2px;
@@ -178,11 +179,19 @@
       display: none;
     }
 
+    .show-all-wrap--mobile { display: none; text-align: center; }
+
+    @media (max-width: 768px) {
+      .show-all-wrap--desktop { display: none; }
+      .show-all-wrap--mobile { display: block; }
+      .showcase-page { padding-top: 64px; }
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .showcase-stage {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 16px;
         padding: 40px 20px;
       }
 
@@ -192,15 +201,21 @@
         align-items: flex-start;
       }
 
-      .showcase-dot {
-        width: 36px;
-        height: 36px;
+      .showcase-dot,
+      .showcase-name,
+      .showcase-desc {
+        display: none;
       }
 
-      .showcase-name,
-      .showcase-desc,
       .showcase-nav {
         width: 100%;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .showcase-nav-dot {
+        width: 32px;
+        height: 32px;
       }
 
       .showcase-images {
@@ -224,7 +239,7 @@
   <nav class="nav">
     <a href="index.html" class="nav-brand">HTA</a>
     <ul class="nav-links">
-      <li><a href="index.html" data-i18n="nav.logos">Logot</a></li>
+      <li><a href="logos.html" data-i18n="nav.logos">Logot</a></li>
       <li><a href="showcase.html" data-i18n="nav.showcase">Paidat</a></li>
     </ul>
     <div class="lang-switcher">
@@ -234,7 +249,6 @@
     </div>
   </nav>
 
- 
   <!-- SHOWCASE -->
   <div class="showcase-page">
 
@@ -250,8 +264,8 @@
         <h2 class="showcase-name" id="sc-name"></h2>
         <p class="showcase-desc" id="sc-desc"></p>
         <div class="showcase-nav" id="sc-nav"></div>
-        <div class="show-all-wrap">
-          <button class="show-all-btn" id="show-all-btn" data-i18n="showcase.showAll">Näytä kaikki vaihtoehdot</button>
+        <div class="show-all-wrap show-all-wrap--desktop">
+          <a href="#all-products" class="show-all-btn" data-i18n="showcase.showAll">Näytä logovariaatiot</a>
         </div>
       </div>
 
@@ -267,26 +281,26 @@
             <span class="showcase-view-label" data-i18n="label.back">Takaa</span>
           </div>
         </div>
+        <div class="show-all-wrap show-all-wrap--mobile">
+          <a href="#all-products" class="show-all-btn" data-i18n="showcase.showAll">Näytä logovariaatiot</a>
+        </div>
       </div>
     </div>
 
-    <!-- All products (hidden initially) -->
-    <div class="all-products section section--alt" id="all-products" hidden>
+    <!-- EDITORIAL -->
+    <section class="editorial">
+      <img src="images/merchandise/model-03.png" alt="HTA hoodie model" />
+    </section>
+
+    <!-- Variants grid -->
+    <div class="all-products section section--alt" id="all-products">
       <div id="variants-grid"></div>
-    </div><!-- /all-products -->
-
-     <!-- EDITORIAL -->
-  <section class="editorial">
-    <img src="images/merchandise/model-03.png" alt="HTA hoodie model" />
-  </section>
-
+    </div>
 
   </div><!-- /showcase-page -->
 
   <!-- FOOTER -->
   <footer class="footer">
-    <span>Helsingin Taitoluisteluakatemia</span>
-    <span class="footer-sep">—</span>
     <span data-i18n="footer.tagline">Visuaalinen identiteetti &amp; tuotteet</span>
   </footer>
 
@@ -438,9 +452,8 @@
         return;
       }
 
-      // Re-render variants if panel is open
-      const ap = document.getElementById('all-products');
-      if (ap && !ap.hidden) renderVariants(idx);
+      // Re-render variants for new colour
+      renderVariants(idx);
 
       // Fade images
       scFront.classList.add('fading');
@@ -465,6 +478,7 @@
 
     // Initial render
     switchTo(0, true);
+    renderVariants(0);
 
     // Render logo variants for the selected colour into #variants-grid
     function renderVariants(idx) {
@@ -485,7 +499,6 @@
         el.className = 'product' + (i % 2 === 1 ? ' product--reverse' : '');
         el.innerHTML = `
           <div class="product__info">
-            <span class="product__color-dot" style="background:${h.color};"></span>
             <div><h3 class="product__name">${label}</h3></div>
           </div>
           <div class="product__images">
@@ -507,24 +520,8 @@
     window.setLanguage = function(lang) {
       _origSetLanguage(lang);
       renderText(current);
-      if (!allProducts.hidden) renderVariants(current);
+      renderVariants(current);
     };
-
-    // Show all toggle
-    const showAllBtn = document.getElementById('show-all-btn');
-    const allProducts = document.getElementById('all-products');
-    showAllBtn.addEventListener('click', () => {
-      const isHidden = allProducts.hidden;
-      allProducts.hidden = !isHidden;
-      const lang = getLang();
-      showAllBtn.textContent = isHidden
-        ? translations[lang]['showcase.showLess']
-        : translations[lang]['showcase.showAll'];
-      if (isHidden) {
-        renderVariants(current);
-        allProducts.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
   </script>
 
   <!-- Lightbox -->

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logos</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- LOGIN OVERLAY -->
+  <div id="login-overlay" style="display:none;">
+    <div class="login-card">
+      <p class="login-label">Salasana</p>
+      <input id="login-pw" class="login-input" type="password" autocomplete="current-password" autofocus />
+      <button id="login-btn" class="login-btn">OK</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">HTA</a>
+    <ul class="nav-links">
+      <li><a href="logos.html" data-i18n="nav.logos">Logot</a></li>
+      <li><a href="showcase.html" data-i18n="nav.showcase">Paidat</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="fi">FI</button>
+      <button class="lang-btn" data-lang="sv">SV</button>
+    </div>
+  </nav>
+
+  <!-- LOGOS -->
+  <section class="section" id="logos">
+    <div class="section-header" style="padding-top: 36px;">
+      <h2 class="section-title" data-i18n="logos.title">Logot</h2>
+      <p class="section-desc" data-i18n="logos.desc">Logot – tunnus, teksti ja yhdistelmät.</p>
+    </div>
+    <div class="logos-grid">
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v0-large.png">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-v0.png" alt="HTA line logo" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label1">Symboli ja teksti</p>
+      </div>
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v1-large.png">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-v1.png" alt="HTA circle logo dark" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label2">Symboli</p>
+      </div>
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v2-large.png">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-v2.png" alt="HTA wordmark" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label3">Ympyrä</p>
+      </div>
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v3-large.png">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-v3.png" alt="HTA circle text logo" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label4">Ympyrämerkki</p>
+      </div>
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v5-large.png">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-v5.png" alt="HTA text thin" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label5">Teksti ohut</p>
+      </div>
+      <div class="logo-card logo-card--light" data-lightbox-src="images/logos/logo-v6-large.png">
+        <div class="logo-card__image">
+          <img src="images/logos/logo-v6.png" alt="HTA text bold" />
+        </div>
+        <p class="logo-card__label" data-i18n="logos.label6">Teksti lihavoitu</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Sulje">&#x2715;</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span data-i18n="footer.tagline">Logot &amp; Tuotteet</span>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script>
+    (function () {
+      if (sessionStorage.getItem('hta-auth') === '1') return;
+      const overlay = document.getElementById('login-overlay');
+      overlay.style.display = 'flex';
+      document.body.classList.add('login-active');
+
+      function attempt() {
+        const val = document.getElementById('login-pw').value;
+        if (val === 'htakatemia') {
+          sessionStorage.setItem('hta-auth', '1');
+          overlay.classList.add('login-overlay--out');
+          document.body.classList.remove('login-active');
+          setTimeout(() => overlay.remove(), 400);
+        } else {
+          const field = document.getElementById('login-pw');
+          field.classList.add('login-input--error');
+          field.value = '';
+          field.focus();
+          setTimeout(() => field.classList.remove('login-input--error'), 600);
+        }
+      }
+
+      document.getElementById('login-btn').addEventListener('click', attempt);
+      document.getElementById('login-pw').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') attempt();
+      });
+    })();
+  </script>
+
+  <!-- Lightbox -->
+  <script>
+    (function () {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+
+      function openLightbox(src, alt, light) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt;
+        lightbox.classList.toggle('lightbox--light', !!light);
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelector('.logos-grid').addEventListener('click', function (e) {
+        const card = e.target.closest('.logo-card');
+        if (!card) return;
+        const img = card.querySelector('img');
+        if (img) openLightbox(card.dataset.lightboxSrc || img.src, img.alt, true);
+      });
+
+      document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+  </script>
+
+</body>
+</html>
