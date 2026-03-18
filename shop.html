@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Try On</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .shop-page {
+      padding-top: 72px;
+    }
+
+    .shop-section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px 64px;
+    }
+
+    .shop-hoodies {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .shop-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .shop-card__img-wrap {
+      position: relative;
+      width: 280px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f0f0f0;
+      cursor: crosshair;
+    }
+
+    .shop-card__img-wrap.drag-over {
+      outline: 2px solid #4D5F86;
+    }
+
+    .shop-card__base {
+      width: 100%;
+      display: block;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .shop-card__logo-overlay {
+      position: absolute;
+      pointer-events: none;
+      width: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 24%;
+    }
+
+    #drop-back .shop-card__logo-overlay {
+      top: calc(24% + 16px);
+      left: calc(50% - 2px);
+    }
+
+    .shop-card__logo-overlay--small {
+      width: 20%;
+      left: calc(61% - 15px);
+      top: 27%;
+      transform: none;
+    }
+
+    .shop-card__logo-overlay--small.shop-card__logo-overlay--shift {
+      left: calc(61% - 22px);
+    }
+
+    .shop-card__logo-overlay--white {
+      filter: brightness(0) invert(1);
+    }
+
+    .shop-card__clear {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(250, 250, 250, 0.92);
+      color: var(--color-navy);
+      border: 1px solid var(--color-navy);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 15px;
+      cursor: pointer;
+      display: none;
+      align-items: none;
+      justify-content: center;
+    }
+
+    .shop-card__clear.visible {
+      display: flex;
+    }
+
+    .shop-card__label {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #999;
+      text-align: center;
+    }
+
+    .shop-size-toggle {
+      display: flex;
+      visibility: hidden;
+      gap: 4px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .shop-size-toggle.visible {
+      visibility: visible;
+    }
+
+    .shop-size-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: #bbb;
+      padding: 2px 4px;
+      transition: color 0.15s;
+    }
+
+    .shop-size-btn.active {
+      color: var(--color-navy);
+      font-weight: 500;
+    }
+
+    .shop-size-sep {
+      font-size: 13px;
+      color: #ddd;
+      line-height: 1.8;
+    }
+
+    .shop-color-nav {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .shop-color-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .shop-color-dot:hover {
+      transform: scale(1.1);
+    }
+
+    .shop-color-dot.active {
+      border-color: var(--color-navy);
+    }
+
+    .shop-logos {
+      border-top: 0px solid #eee;
+      padding-top: 0px;
+    }
+
+    .shop-logos__title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #aaa;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .shop-logos-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .shop-logos-grid {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .shop-logo-tile {
+      width: 88px;
+      padding: 14px 10px 10px;
+      border-radius: 12px;
+      background: #f5f5f5;
+      cursor: grab;
+      text-align: center;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: background 0.15s, outline 0.15s;
+    }
+
+    .shop-logo-tile:active {
+      cursor: grabbing;
+    }
+
+    .shop-logo-tile:hover {
+      background: #eaeef5;
+    }
+
+    .shop-logo-tile.selected {
+      background: #e0e6f0;
+      outline: 2px solid #4D5F86;
+    }
+
+    .shop-logo-tile img {
+      width: 100%;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .shop-logo-tile__label {
+      font-size: 10px;
+      color: #888;
+      line-height: 1.3;
+    }
+
+    .shop-desc--mobile {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .shop-page { padding-top: 64px; }
+
+      .shop-section { padding: 0 20px 40px; }
+
+      .shop-card__img-wrap { width: calc(50vw - 32px); min-width: 140px; }
+
+      .shop-desc--desktop { display: none; }
+      .shop-desc--mobile { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN OVERLAY -->
+  <div id="login-overlay" style="display:none;">
+    <div class="login-card">
+      <p class="login-label">Salasana</p>
+      <input id="login-pw" class="login-input" type="password" autocomplete="current-password" autofocus />
+      <button id="login-btn" class="login-btn">OK</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">HTA</a>
+    <ul class="nav-links">
+      <li><a href="logos.html" data-i18n="nav.logos">Logot</a></li>
+      <li><a href="showcase.html" data-i18n="nav.showcase">Paidat</a></li>
+      <li><a href="shop.html" data-i18n="nav.shop">Kokeile</a></li>
+    </ul>
+    <div class="menu-wrap">
+      <button class="menu-btn" id="menu-btn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="menu-dropdown" id="menu-dropdown">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fi">FI</button>
+        <button class="lang-btn" data-lang="sv">SV</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="shop-page">
+    <div class="shop-section">
+
+      <!-- Section header -->
+      <div class="section-header" style="padding-top: 36px; margin-bottom: 40px;">
+        <h2 class="section-title" data-i18n="shop.title">Kokeile logoa</h2>
+        <p class="section-desc shop-desc--desktop" data-i18n="shop.desc">Raahaa logo hupparin päälle nähdäksesi sijoittelun.</p>
+        <p class="section-desc shop-desc--mobile" data-i18n="shop.tap">Valitse logo ja napauta hupparia sijoittaaksesi sen.</p>
+      </div>
+
+      <!-- Hoodie cards -->
+      <div class="shop-hoodies">
+        <div class="shop-card">
+          <div class="shop-card__img-wrap" id="drop-front">
+            <img class="shop-card__base" data-side="front" src="images/merchandise/dummy-hoodie-lavender-front.png" alt="" />
+            <button class="shop-card__clear" aria-label="Clear">&#x2715;</button>
+          </div>
+          <p class="shop-card__label" data-i18n="label.front">Etupuoli</p>
+          <div class="shop-size-toggle">
+            <button class="shop-size-btn active" id="size-large">Large</button>
+            <span class="shop-size-sep">/</span>
+            <button class="shop-size-btn" id="size-small">Small</button>
+          </div>
+        </div>
+        <div class="shop-card">
+          <div class="shop-card__img-wrap" id="drop-back">
+            <img class="shop-card__base" data-side="back" src="images/merchandise/dummy-hoodie-lavender-back.png" alt="" />
+            <button class="shop-card__clear" aria-label="Clear">&#x2715;</button>
+          </div>
+          <p class="shop-card__label" data-i18n="label.back">Selkäpuoli</p>
+        </div>
+      </div>
+
+      <!-- Color nav -->
+      <div class="shop-color-nav" id="shop-color-nav"></div>
+
+      <!-- Logo picker -->
+      <div class="shop-logos">
+<div class="shop-logos-grid" id="shop-logos-grid"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span data-i18n="footer.tagline">Logot &amp; Tuotteet</span>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+
+  <script>
+    (function () {
+      if (sessionStorage.getItem('hta-auth') === '1') return;
+      const overlay = document.getElementById('login-overlay');
+      overlay.style.display = 'flex';
+      document.body.classList.add('login-active');
+
+      function attempt() {
+        const val = document.getElementById('login-pw').value;
+        if (val === 'htakatemia') {
+          sessionStorage.setItem('hta-auth', '1');
+          overlay.classList.add('login-overlay--out');
+          document.body.classList.remove('login-active');
+          setTimeout(() => overlay.remove(), 400);
+        } else {
+          const field = document.getElementById('login-pw');
+          field.classList.add('login-input--error');
+          field.value = '';
+          field.focus();
+          setTimeout(() => field.classList.remove('login-input--error'), 600);
+        }
+      }
+
+      document.getElementById('login-btn').addEventListener('click', attempt);
+      document.getElementById('login-pw').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') attempt();
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const logos = [
+        { src: 'images/logos/logo-v1.png', labelKey: 'logos.label2' },
+        { src: 'images/logos/logo-v3.png', labelKey: 'logos.label4' },
+        { src: 'images/logos/logo-v2.png', labelKey: 'logos.label3' },
+        { src: 'images/logos/logo-v0.png', labelKey: 'logos.label1' },
+        { src: 'images/logos/logo-v5.png', labelKey: 'logos.label5', shift: true },
+        { src: 'images/logos/logo-v7.png', labelKey: 'logos.label6', shift: true },
+      ];
+
+      const colors = [
+        { key: 'lavender', color: '#DAC6D7', front: 'images/merchandise/dummy-hoodie-lavender-front.png', back: 'images/merchandise/dummy-hoodie-lavender-back.png' },
+        { key: 'lblue',    color: '#C4DAEE', front: 'images/merchandise/dummy-hoodie-lblue-front.png',    back: 'images/merchandise/dummy-hoodie-blue-back.png' },
+        { key: 'lilac',    color: '#AFB6D9', front: 'images/merchandise/dummy-hoodie-lilac-front.png',    back: 'images/merchandise/dummy-hoodie-lilac-back.png' },
+        { key: 'teal',     color: '#80AEBC', front: 'images/merchandise/dummy-hoodie-teal-front.png',     back: 'images/merchandise/dummy-hoodie-teal-back.png' },
+        { key: 'navy',     color: '#4D5F86', front: 'images/merchandise/dummy-hoodie-navy-front.png',     back: 'images/merchandise/dummy-hoodie-navy-back.png' },
+        { key: 'darknavy', color: '#2C3546', front: 'images/merchandise/dummy-hoodie-darknavy-front.png', back: 'images/merchandise/dummy-hoodie-darknavy-back.png' },
+      ];
+
+      const colorNav = document.getElementById('shop-color-nav');
+      colors.forEach(function (c, i) {
+        const dot = document.createElement('button');
+        dot.className = 'shop-color-dot' + (i === 0 ? ' active' : '');
+        dot.style.background = c.color;
+        dot.setAttribute('aria-label', c.key);
+        dot.addEventListener('click', function () {
+          document.querySelector('.shop-card__base[data-side="front"]').src = c.front;
+          document.querySelector('.shop-card__base[data-side="back"]').src = c.back;
+          document.querySelectorAll('.shop-color-dot').forEach(function (d) { d.classList.remove('active'); });
+          dot.classList.add('active');
+          currentColorKey = c.key;
+          updateOverlayColors();
+        });
+        colorNav.appendChild(dot);
+      });
+
+      const grid = document.getElementById('shop-logos-grid');
+
+      // Build logo tiles
+      logos.forEach(function (logo) {
+        const tile = document.createElement('div');
+        tile.className = 'shop-logo-tile';
+        tile.draggable = true;
+        tile.dataset.src = logo.src;
+        if (logo.shift) tile.dataset.shift = 'true';
+        const img = document.createElement('img');
+        img.src = logo.src;
+        img.alt = '';
+        tile.appendChild(img);
+        grid.appendChild(tile);
+      });
+
+      // Re-apply translations to newly created elements
+      setLanguage(document.documentElement.lang);
+
+      // State
+      let dragSrc = null;
+      let dragShift = false;
+      let selectedTile = null;
+      let sizeMode = 'large';
+      let currentColorKey = 'lavender';
+      const whiteLogoColors = ['navy', 'darknavy'];
+
+      function isWhiteMode() {
+        return whiteLogoColors.indexOf(currentColorKey) !== -1;
+      }
+
+      function updateOverlayColors() {
+        document.querySelectorAll('.shop-card__logo-overlay').forEach(function (o) {
+          o.classList.toggle('shop-card__logo-overlay--white', isWhiteMode());
+        });
+      }
+
+      // Size toggle
+      document.getElementById('size-large').addEventListener('click', function () {
+        sizeMode = 'large';
+        document.getElementById('size-large').classList.add('active');
+        document.getElementById('size-small').classList.remove('active');
+        var overlay = document.getElementById('drop-front').querySelector('.shop-card__logo-overlay');
+        if (overlay) {
+          overlay.classList.remove('shop-card__logo-overlay--small');
+          overlay.classList.remove('shop-card__logo-overlay--shift');
+        }
+      });
+
+      document.getElementById('size-small').addEventListener('click', function () {
+        sizeMode = 'small';
+        document.getElementById('size-small').classList.add('active');
+        document.getElementById('size-large').classList.remove('active');
+        var overlay = document.getElementById('drop-front').querySelector('.shop-card__logo-overlay');
+        if (overlay) {
+          overlay.classList.add('shop-card__logo-overlay--small');
+          overlay.classList.toggle('shop-card__logo-overlay--shift', overlay.dataset.shift === 'true');
+        }
+      });
+
+      // Drag events on logo grid
+      grid.addEventListener('dragstart', function (e) {
+        const tile = e.target.closest('.shop-logo-tile');
+        if (!tile) return;
+        dragSrc = tile.dataset.src;
+        dragShift = tile.dataset.shift === 'true';
+        e.dataTransfer.effectAllowed = 'copy';
+        e.dataTransfer.setData('text/plain', tile.dataset.src);
+      });
+
+      grid.addEventListener('dragend', function () {
+        dragSrc = null;
+      });
+
+      // Tap-to-select on logo tiles
+      grid.addEventListener('click', function (e) {
+        const tile = e.target.closest('.shop-logo-tile');
+        if (!tile) return;
+        if (selectedTile && selectedTile !== tile) {
+          selectedTile.classList.remove('selected');
+        }
+        if (selectedTile === tile) {
+          tile.classList.remove('selected');
+          selectedTile = null;
+        } else {
+          tile.classList.add('selected');
+          selectedTile = tile;
+        }
+      });
+
+      // Drop targets
+      document.querySelectorAll('.shop-card__img-wrap').forEach(function (wrap) {
+        wrap.addEventListener('dragover', function (e) {
+          e.preventDefault();
+          wrap.classList.add('drag-over');
+        });
+
+        wrap.addEventListener('dragleave', function () {
+          wrap.classList.remove('drag-over');
+        });
+
+        wrap.addEventListener('drop', function (e) {
+          e.preventDefault();
+          wrap.classList.remove('drag-over');
+          const src = e.dataTransfer.getData('text/plain');
+          if (src) placeLogo(wrap, src, dragShift);
+        });
+
+        // Tap-to-place
+        wrap.addEventListener('click', function (e) {
+          if (e.target.closest('.shop-card__clear')) return;
+          if (selectedTile) {
+            placeLogo(wrap, selectedTile.dataset.src, selectedTile.dataset.shift === 'true');
+            selectedTile.classList.remove('selected');
+            selectedTile = null;
+          }
+        });
+      });
+
+      function placeLogo(wrap, src, shift) {
+        let overlay = wrap.querySelector('.shop-card__logo-overlay');
+        if (!overlay) {
+          overlay = document.createElement('img');
+          overlay.className = 'shop-card__logo-overlay';
+          wrap.insertBefore(overlay, wrap.querySelector('.shop-card__clear'));
+        }
+        overlay.src = src;
+        overlay.dataset.shift = shift ? 'true' : '';
+        overlay.classList.toggle('shop-card__logo-overlay--white', isWhiteMode());
+        if (wrap.id === 'drop-front') {
+          overlay.classList.toggle('shop-card__logo-overlay--small', sizeMode === 'small');
+          overlay.classList.toggle('shop-card__logo-overlay--shift', sizeMode === 'small' && !!shift);
+          document.querySelector('.shop-size-toggle').classList.add('visible');
+        }
+        wrap.querySelector('.shop-card__clear').classList.add('visible');
+      }
+
+      // Clear buttons
+      document.querySelectorAll('.shop-card__clear').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const wrap = btn.closest('.shop-card__img-wrap');
+          const overlay = wrap.querySelector('.shop-card__logo-overlay');
+          if (overlay) overlay.remove();
+          btn.classList.remove('visible');
+          if (wrap.id === 'drop-front') {
+            document.querySelector('.shop-size-toggle').classList.remove('visible');
+            sizeMode = 'large';
+            document.getElementById('size-large').classList.add('active');
+            document.getElementById('size-small').classList.remove('active');
+          }
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
