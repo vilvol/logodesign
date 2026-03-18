@@ -3,7 +3,13 @@ const translations = {
     'nav.logos': 'Logot',
     'nav.merchandise': 'Tuotteet',
     'nav.showcase': 'Paidat',
+    'nav.shop': 'Kokeile',
     'nav.contact': 'Yhteystiedot',
+    'shop.title': 'Kokeile logoa',
+    'shop.desc': 'Raahaa logo hupparin päälle nähdäksesi sijoittelun.',
+    'shop.tap': 'Valitse logo ja napauta hupparia sijoittaaksesi sen.',
+    'shop.logos': 'Logot',
+    'shop.clear': 'Poista',
     'hero.eyebrow': 'Visuaalinen Identiteetti',
     'hero.sub': 'Logosuunnittelu ja tuotekokoelma',
     'editorial.eyebrow': 'Kokoelma',
@@ -45,7 +51,13 @@ const translations = {
     'nav.logos': 'Logos',
     'nav.merchandise': 'Merchandise',
     'nav.showcase': 'Shirts',
+    'nav.shop': 'Try on',
     'nav.contact': 'Contact',
+    'shop.title': 'Try it on',
+    'shop.desc': 'Drag a logo onto the hoodie to preview the placement.',
+    'shop.tap': 'Select a logo then tap the hoodie to place it.',
+    'shop.logos': 'Logos',
+    'shop.clear': 'Clear',
     'hero.eyebrow': 'Visual Identity',
     'hero.sub': 'Logo design &amp; merchandise collection',
     'editorial.eyebrow': 'Collection',
@@ -121,6 +133,12 @@ const translations = {
     'hoodies.title': 'Hoodies',
     'hoodies.desc': 'Hoodiekollektion i olika färger.',
     'hoodies.showMore': 'Se alla',
+    'nav.shop': 'Prova',
+    'shop.title': 'Prova det på',
+    'shop.desc': 'Dra en logotyp på hoodien för att förhandsgranska placeringen.',
+    'shop.tap': 'Välj en logotyp och tryck på hoodien för att placera den.',
+    'shop.logos': 'Logotyper',
+    'shop.clear': 'Rensa',
     'contact.title': 'Kontakta Oss',
     'contact.desc': 'Intresserad av kollektionen eller en anpassad design?',
     'footer.tagline': 'Logotypdesign &amp; Merchandise',
@@ -141,8 +159,23 @@ function setLanguage(lang) {
   localStorage.setItem('hta-lang', lang);
 }
 
+const _menuBtn = document.getElementById('menu-btn');
+const _menuDropdown = document.getElementById('menu-dropdown');
+
+if (_menuBtn && _menuDropdown) {
+  _menuBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    _menuDropdown.classList.toggle('open');
+  });
+  _menuDropdown.addEventListener('click', e => e.stopPropagation());
+  document.addEventListener('click', () => _menuDropdown.classList.remove('open'));
+}
+
 document.querySelectorAll('.lang-btn').forEach(btn => {
-  btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+  btn.addEventListener('click', () => {
+    setLanguage(btn.dataset.lang);
+    if (_menuDropdown) _menuDropdown.classList.remove('open');
+  });
 });
 
 setLanguage(localStorage.getItem('hta-lang') || 'en');
