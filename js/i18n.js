@@ -10,6 +10,8 @@ const translations = {
     'shop.tap': 'Valitse logo ja napauta hupparia sijoittaaksesi sen.',
     'shop.logos': 'Logot',
     'shop.clear': 'Poista',
+    'shop.download': 'Lataa kuva',
+    'shop.order': 'Tilaa WhatsApp',
     'hero.eyebrow': 'Visuaalinen Identiteetti',
     'hero.sub': 'Logosuunnittelu ja tuotekokoelma',
     'editorial.eyebrow': 'Kokoelma',
@@ -45,7 +47,7 @@ const translations = {
     'hoodies.showMore': 'Katso kaikki',
     'contact.title': 'Ota Yhteyttä',
     'contact.desc': 'Kiinnostaako kokoelma tai räätälöity suunnittelu?',
-    'footer.tagline': 'Logot &amp; Tuotteet',
+    'footer.tagline': 'Helsingin Taitoluisteluakatemia',
   },
   en: {
     'nav.logos': 'Logos',
@@ -58,6 +60,8 @@ const translations = {
     'shop.tap': 'Select a logo then tap the hoodie to place it.',
     'shop.logos': 'Logos',
     'shop.clear': 'Clear',
+    'shop.download': 'Download image',
+    'shop.order': 'Order via WhatsApp',
     'hero.eyebrow': 'Visual Identity',
     'hero.sub': 'Logo design &amp; merchandise collection',
     'editorial.eyebrow': 'Collection',
@@ -93,7 +97,7 @@ const translations = {
     'hoodies.showMore': 'See all',
     'contact.title': 'Get in Touch',
     'contact.desc': 'Interested in the collection or a custom design?',
-    'footer.tagline': 'Logo Design &amp; Merchandise',
+    'footer.tagline': 'Helsingin Taitoluisteluakatemia',
   },
   sv: {
     'nav.logos': 'Logotyper',
@@ -139,9 +143,11 @@ const translations = {
     'shop.tap': 'Välj en logotyp och tryck på hoodien för att placera den.',
     'shop.logos': 'Logotyper',
     'shop.clear': 'Rensa',
+    'shop.download': 'Ladda ner bild',
+    'shop.order': 'Beställ via WhatsApp',
     'contact.title': 'Kontakta Oss',
     'contact.desc': 'Intresserad av kollektionen eller en anpassad design?',
-    'footer.tagline': 'Logotypdesign &amp; Merchandise',
+    'footer.tagline': 'Helsingin Taitoluisteluakatemia',
   }
 };
 
