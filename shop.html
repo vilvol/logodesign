@@ -232,6 +232,41 @@
       display: none;
     }
 
+    .shop-action-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 22px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      line-height: 1;
+    }
+
+    .shop-action-btn--download {
+      color: var(--color-navy);
+      border: 1px solid var(--color-border);
+      background: none;
+      opacity: 0.35;
+      transition: opacity 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .shop-action-btn--download.active {
+      opacity: 1;
+      background: var(--color-navy);
+      border-color: var(--color-navy);
+      color: #fff;
+    }
+
+    .shop-action-btn--download.active:hover {
+      opacity: 0.8;
+    }
+
     @media (max-width: 768px) {
       .shop-page { padding-top: 64px; }
 
@@ -314,6 +349,11 @@
       <!-- Logo picker -->
       <div class="shop-logos">
 <div class="shop-logos-grid" id="shop-logos-grid"></div>
+      </div>
+
+      <!-- Download -->
+      <div style="text-align: center; margin-top: 28px;">
+        <button class="shop-action-btn shop-action-btn--download" id="shop-download" data-i18n="shop.download">Download</button>
       </div>
 
     </div>
@@ -430,6 +470,77 @@
         });
       }
 
+      function updateDownloadState() {
+        var hasBoth = !!(
+          document.getElementById('drop-front').querySelector('.shop-card__logo-overlay') &&
+          document.getElementById('drop-back').querySelector('.shop-card__logo-overlay')
+        );
+        document.getElementById('shop-download').classList.toggle('active', hasBoth);
+      }
+
+      function downloadCard() {
+        var wrap = document.getElementById('drop-front');
+        var baseImg = wrap.querySelector('.shop-card__base');
+        var overlay = wrap.querySelector('.shop-card__logo-overlay');
+        var wrapRect = wrap.getBoundingClientRect();
+        var dpr = window.devicePixelRatio || 1;
+        var w = Math.round(wrapRect.width);
+        var h = Math.round(wrapRect.height);
+        var PAD = 16;
+        // Capture overlay rect synchronously before async image loads
+        var overlayData = overlay ? {
+          src: overlay.src,
+          x: overlay.getBoundingClientRect().left - wrapRect.left,
+          y: overlay.getBoundingClientRect().top - wrapRect.top,
+          w: overlay.getBoundingClientRect().width,
+          h: overlay.getBoundingClientRect().height,
+          white: isWhiteMode()
+        } : null;
+
+        function render(img1, img2) {
+          var canvas = document.createElement('canvas');
+          canvas.width = w * dpr;
+          canvas.height = h * dpr;
+          var ctx = canvas.getContext('2d');
+          ctx.scale(dpr, dpr);
+          ctx.fillStyle = '#f0f0f0';
+          ctx.fillRect(0, 0, w, h);
+          ctx.drawImage(img1, PAD, PAD, w - PAD * 2, h - PAD * 2);
+          if (img2 && overlayData) {
+            if (overlayData.white) ctx.filter = 'brightness(0) invert(1)';
+            ctx.drawImage(img2, overlayData.x, overlayData.y, overlayData.w, overlayData.h);
+            ctx.filter = 'none';
+          }
+          canvas.toBlob(function (blob) {
+            if (!blob) return;
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'hta-hoodie.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(function () { URL.revokeObjectURL(url); }, 100);
+          });
+        }
+
+        var img1 = new Image();
+        img1.crossOrigin = 'anonymous';
+        img1.onload = function () {
+          if (overlayData) {
+            var img2 = new Image();
+            img2.crossOrigin = 'anonymous';
+            img2.onload = function () { render(img1, img2); };
+            img2.src = overlayData.src;
+          } else {
+            render(img1, null);
+          }
+        };
+        img1.src = baseImg.src;
+      }
+
+      document.getElementById('shop-download').addEventListener('click', downloadCard);
+
       // Size toggle
       document.getElementById('size-large').addEventListener('click', function () {
         sizeMode = 'large';
@@ -527,6 +638,7 @@
           overlay.classList.toggle('shop-card__logo-overlay--shift', sizeMode === 'small' && !!shift);
           document.querySelector('.shop-size-toggle').classList.add('visible');
         }
+        updateDownloadState();
         wrap.querySelector('.shop-card__clear').classList.add('visible');
       }
 
@@ -543,8 +655,10 @@
             document.getElementById('size-large').classList.add('active');
             document.getElementById('size-small').classList.remove('active');
           }
+          updateDownloadState();
         });
       });
+
     })();
   </script>
 
